@@ -67,4 +67,18 @@ DELETE FROM bans WHERE tg_id=?
 SELECT_USER_FROM_BAN = '''
 SELECT tg_id,first_name,countt FROM bans'''
 
-
+CREATE_REGISTER_TABLE = '''
+CREATE TABLE IF NOT EXISTS registers(
+id INTEGER PRIMARY KEY,
+tg_id INTEGER,
+nickname CHAR(20),
+biography TEXT,
+age INTEGER,
+zodiac CHAR(20),
+gender CHAR(20),
+best_color CHAR(20),
+photo TEXT,
+UNIQUE (tg_id)
+'''
+INSERT_REGISTER_TABLE = '''
+INSERT OR IGNORE INTO registers VALUES (?,?,?,?,?,?,?,?,?)'''

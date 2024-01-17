@@ -1,14 +1,15 @@
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 async def quest_button():
-    markup = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup(row_width=1)
     qb=InlineKeyboardButton('Quastions❔', callback_data='question_base')
     qb1 = InlineKeyboardButton('Check for bad user📛', callback_data='bad')
-    markup.add(qb,qb1)
+    qb3=InlineKeyboardButton('Registration🐧', callback_data='reg')
+    markup.add(qb,qb1,qb3)
     return markup
 
 
 async def question_for_transpot_type(var1,var2,var3,var4):
-    markup = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup(row_width=1)
     air=InlineKeyboardButton(var1, callback_data='aa'+var1)
     car=InlineKeyboardButton(var2, callback_data='cc'+var2)
     bus=InlineKeyboardButton(var3, callback_data='bb'+var3)
