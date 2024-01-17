@@ -79,6 +79,10 @@ gender CHAR(20),
 best_color CHAR(20),
 photo TEXT,
 UNIQUE (tg_id)
+)
 '''
 INSERT_REGISTER_TABLE = '''
 INSERT OR IGNORE INTO registers VALUES (?,?,?,?,?,?,?,?,?)'''
+
+SELECT_REGISTER_TABLE = '''
+SELECT tg_id FROM registers WHERE tg_id=?'''

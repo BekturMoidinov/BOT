@@ -18,12 +18,21 @@ class Registration(StatesGroup):
     photo = State()
 
 async def register_begin(call: types.CallbackQuery):
-    await bot.send_message(
-        chat_id=call.from_user.id,
-        text='Write ur name'
+    datab=ddbb.Database()
+    ids=datab.select_id_info(
+        tg=call.from_user.id
     )
-    await Registration.Name.set()
-
+    if ids:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text='U have already registered✅'
+        )
+    else:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text='Write ur name'
+        )
+        await Registration.Name.set()
 async def load_name(m:types.Message,state:FSMContext):
     async with state.proxy() as data:
         data["name"] = m.text
@@ -93,6 +102,17 @@ async def load_photo(m:types.Message,state:FSMContext):
         destination_dir=mediaa
     )
     async with state.proxy() as data:
+        datab=ddbb.Database()
+        datab.insert_info(
+            tg=m.from_user.id,
+            name=data["name"],
+            bio=data["bio"],
+            age=data["age"],
+            zodiac=data["zodiac"],
+            gender=data["gender"],
+            color=data["color"],
+            photo=path.name
+        )
         with open(path.name, "rb") as photo:
             await bot.send_photo(
                 chat_id=m.from_user.id,

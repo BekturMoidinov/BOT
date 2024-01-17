@@ -11,6 +11,7 @@ class Database:
         self.connection.execute(query.CREATE_USER_TABLE)
         self.connection.execute(query.CREATE_ANSWER_TABLE)
         self.connection.execute(query.CREATE_BAN_TABLE)
+        self.connection.execute(query.CREATE_REGISTER_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
         self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name))
@@ -52,4 +53,11 @@ class Database:
     def select_all_id_answer(self):
         self.cursor.execute(query.SELECT_ALL_ID_ANSWER)
         rows = self.cursor.fetchall()
+        return rows
+    def insert_info(self,tg,name,bio,age,zodiac,gender,color,photo):
+        self.cursor.execute(query.INSERT_REGISTER_TABLE,(None,tg,name,bio,age,zodiac,gender,color,photo))
+        self.connection.commit()
+    def select_id_info(self,tg):
+        self.cursor.execute(query.SELECT_REGISTER_TABLE,(tg,))
+        rows = self.cursor.fetchone()
         return rows
