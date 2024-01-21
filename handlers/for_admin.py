@@ -51,7 +51,8 @@ async def foradmin3(m:types.Message):
                 )
                 await bot.send_message(
                     chat_id=m.from_user.id,
-                    text='Write down one id in order to see what this user has written👇'
+                    text='Write down one id in order to see what this user has written👇\n'
+                         "To stop 🫸 write 'stop'"
                 )
                 await see_idea_problem.id.set()
         else:
