@@ -86,3 +86,41 @@ INSERT OR IGNORE INTO registers VALUES (?,?,?,?,?,?,?,?,?)'''
 
 SELECT_REGISTER_TABLE = '''
 SELECT tg_id FROM registers WHERE tg_id=?'''
+
+SELECT_INFO_REGISTER_TABLE = '''
+SELECT tg_id,nickname,biography,age,zodiac,gender,best_color,photo FROM registers WHERE tg_id=?'''
+
+SELECT_ALL_INFO_REGISTER_TABLE = '''
+SELECT * FROM registers'''
+
+DELETE_REGISTER_TABLE = '''
+DELETE FROM registers WHERE tg_id=?'''
+
+CREATE_FEED_OFFER_TABLE='''CREATE TABLE IF NOT EXISTS feed_offers(
+id INTEGER PRIMARY KEY,
+tg_id INTEGER,
+ides TEXT,
+problem TEXT,
+UNIQUE (tg_id)
+)
+'''
+INSERT_FEED_OFFER_TABLE = '''
+INSERT OR IGNORE INTO feed_offers VALUES (?,?,?,?)
+'''
+CREATE_LIKE_DISLIKE_TABLE ='''
+CREATE TABLE IF NOT EXISTS like_dislike(
+ID INTEGER PRIMARY KEY,
+user_tg_id INTEGER,
+liker_tg_id INTEGER,
+like_dislike CHAR(20),
+UNIQUE (user_tg_id, liker_tg_id)
+)'''
+INSERT_LIKE_DISLIKE_TABLE = '''
+INSERT INTO like_dislike VALUES (?,?,?,?)'''
+
+FILTER_LEFT_JOIN='''
+SELECT * FROM registers
+LEFT JOIN like_dislike ON registers.tg_id = like_dislike.user_tg_id
+AND like_dislike.liker_tg_id = ?
+WHERE like_dislike.ID IS NULL
+AND registers.tg_id != ?'''

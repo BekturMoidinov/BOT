@@ -12,6 +12,8 @@ class Database:
         self.connection.execute(query.CREATE_ANSWER_TABLE)
         self.connection.execute(query.CREATE_BAN_TABLE)
         self.connection.execute(query.CREATE_REGISTER_TABLE)
+        self.connection.execute(query.CREATE_FEED_OFFER_TABLE)
+        self.connection.execute(query.CREATE_LIKE_DISLIKE_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
         self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name))
@@ -61,3 +63,21 @@ class Database:
         self.cursor.execute(query.SELECT_REGISTER_TABLE,(tg,))
         rows = self.cursor.fetchone()
         return rows
+    def insert_feed_offer(self,tg,idea,offer):
+        self.cursor.execute(query.INSERT_FEED_OFFER_TABLE,(None,tg,idea,offer))
+        self.connection.commit()
+
+    def select_info_registr_table(self,tg_id):
+        self.cursor.execute(query.SELECT_INFO_REGISTER_TABLE,(tg_id,))
+        row = self.cursor.fetchone()
+        return row
+    def select_all_registr(self,tg_id):
+        self.cursor.execute(query.FILTER_LEFT_JOIN,(tg_id,tg_id))
+        rows = self.cursor.fetchall()
+        return rows
+    def delete_info_registr_table(self,tg_id):
+        self.cursor.execute(query.DELETE_REGISTER_TABLE,(tg_id,))
+        self.connection.commit()
+    def insert_like_dislike_table(self,user,liker,what):
+        self.cursor.execute(query.INSERT_LIKE_DISLIKE_TABLE,(None,user,liker,what))
+        self.connection.commit()

@@ -9,7 +9,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 class Registration(StatesGroup):
-    Name=State()
+    name=State()
     biography=State()
     age=State()
     zodiac_sign=State()
@@ -22,17 +22,21 @@ async def register_begin(call: types.CallbackQuery):
     ids=datab.select_id_info(
         tg=call.from_user.id
     )
-    if ids:
+    if ids and call.data=='reg':
         await bot.send_message(
             chat_id=call.from_user.id,
-            text='U have already registered✅'
+            text='U have already registered✅')
+    elif ids is None and call.data=='update':
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text='U havnt registered , so u cant update profile'
         )
-    else:
+    elif (ids is None and call.data=='reg') or (ids is not None and call.data=='update'):
         await bot.send_message(
             chat_id=call.from_user.id,
             text='Write ur name'
         )
-        await Registration.Name.set()
+        await Registration.name.set()
 async def load_name(m:types.Message,state:FSMContext):
     async with state.proxy() as data:
         data["name"] = m.text
@@ -101,39 +105,62 @@ async def load_photo(m:types.Message,state:FSMContext):
     path=await m.photo[-1].download(
         destination_dir=mediaa
     )
-    async with state.proxy() as data:
-        datab=ddbb.Database()
-        datab.insert_info(
-            tg=m.from_user.id,
-            name=data["name"],
-            bio=data["bio"],
-            age=data["age"],
-            zodiac=data["zodiac"],
-            gender=data["gender"],
-            color=data["color"],
-            photo=path.name
-        )
-        with open(path.name, "rb") as photo:
-            await bot.send_photo(
-                chat_id=m.from_user.id,
-                photo=photo,
-                caption=Userinfo.format(
-                    name=data['name'],
-                    bio=data['bio'],
-                    age=data['age'],
-                    z=data['zodiac'],
-                    gender=data['gender'],
-                    bestcolor=data['color']
-                )
-            )
-    await bot.send_message(
-        chat_id=m.from_user.id,
-        text='U have successfully registered🎉🎊'
+    datab = ddbb.Database()
+    row=datab.select_id_info(
+        tg=m.from_user.id
     )
+    if row is None:
+        async with state.proxy() as data:
+            datab.insert_info(
+                tg=m.from_user.id,
+                name=data["name"],
+                bio=data["bio"],
+                age=data["age"],
+                zodiac=data["zodiac"],
+                gender=data["gender"],
+                color=data["color"],
+                photo=path.name
+            )
+            with open(path.name, "rb") as photo:
+                await bot.send_photo(
+                    chat_id=m.from_user.id,
+                    photo=photo,
+                    caption=Userinfo.format(
+                        name=data['name'],
+                        bio=data['bio'],
+                        age=data['age'],
+                        z=data['zodiac'],
+                        gender=data['gender'],
+                        bestcolor=data['color']
+                    )
+                )
+        await bot.send_message(
+            chat_id=m.from_user.id,
+            text='U have successfully registered🎉🎊'
+        )
+    else:
+        datab.delete_info_registr_table(
+            tg_id=m.from_user.id
+        )
+        async with state.proxy() as data:
+            datab.insert_info(
+                tg=m.from_user.id,
+                name=data["name"],
+                bio=data["bio"],
+                age=data["age"],
+                zodiac=data["zodiac"],
+                gender=data["gender"],
+                color=data["color"],
+                photo=path.name
+            )
+        await bot.send_message(
+            chat_id=m.from_user.id,
+            text='U have successfully updated profile🎉'
+        )
     await state.finish()
 def registr_reg_handler(dp:Dispatcher):
-    dp.register_callback_query_handler(register_begin,lambda call:call.data == "reg")
-    dp.register_message_handler(load_name,state=Registration.Name,content_types=["text"])
+    dp.register_callback_query_handler(register_begin,lambda call:call.data in ("reg","update"))
+    dp.register_message_handler(load_name,state=Registration.name,content_types=["text"])
     dp.register_message_handler(load_bio,state=Registration.biography,content_types=["text"])
     dp.register_message_handler(load_age,state=Registration.age,content_types=["text"])
     dp.register_message_handler(load_zodiac,state=Registration.zodiac_sign,content_types=["text"])
