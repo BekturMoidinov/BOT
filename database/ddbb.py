@@ -12,9 +12,9 @@ class Database:
         self.connection.execute(query.CREATE_ANSWER_TABLE)
         self.connection.execute(query.CREATE_BAN_TABLE)
         self.connection.execute(query.CREATE_REGISTER_TABLE)
-        self.connection.execute(query.CREATE_FEED_OFFER_TABLE)
         self.connection.execute(query.CREATE_LIKE_DISLIKE_TABLE)
         self.connection.execute(query.CREATE_USER_COMLAIN_TABLE)
+        self.connection.execute(query.CREATE_FEEDBACK_PROBLEM_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
         self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name))
@@ -64,9 +64,6 @@ class Database:
         self.cursor.execute(query.SELECT_REGISTER_TABLE,(tg,))
         rows = self.cursor.fetchone()
         return rows
-    def insert_feed_offer(self,tg,idea,offer):
-        self.cursor.execute(query.INSERT_FEED_OFFER_TABLE,(None,tg,idea,offer))
-        self.connection.commit()
 
     def select_info_registr_table(self,tg_id):
         self.cursor.execute(query.SELECT_INFO_REGISTER_TABLE,(tg_id,))
@@ -90,5 +87,16 @@ class Database:
         self.connection.commit()
     def select_count_complain_table(self,bad_id):
         self.cursor.execute(query.SELECT_COUNT_COMLAIN_TABLE,(bad_id,))
+        row=self.cursor.fetchone()
+        return row
+    def insert_feedback_problem_table(self,tg_id,idea,problem):
+        self.cursor.execute(query.INSERT_FEEDBACK_PROBLEM_TABLE,(None,tg_id,idea,problem))
+        self.connection.commit()
+    def select_id_feedback_problem_table(self):
+        self.cursor.execute(query.SELECT_ID_FEEDBACK_PROBLEM_TABLE)
+        row=self.cursor.fetchall()
+        return row
+    def select_idea_problem_feedback_problem_table(self,tg_id):
+        self.cursor.execute(query.SELECT_IDEA_PROBLEM_FEEDBACK_PROBLEM_TABLE,(tg_id,))
         row=self.cursor.fetchone()
         return row

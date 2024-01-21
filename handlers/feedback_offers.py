@@ -27,9 +27,14 @@ async def load_idea(m:types.Message,state:FSMContext):
     )
     await feedb_and_offer.next()
 async def load_problem(m:types.Message,state):
+    datab=ddbb.Database()
     async with state.proxy() as data:
         data['problem']=m.text
-        print(data)
+        datab.insert_feedback_problem_table(
+            tg_id=m.from_user.id,
+            idea=data['idea'],
+            problem=data['problem']
+        )
     await bot.send_message(
         chat_id=m.from_user.id, text='Thank u for ur interest'
     )
