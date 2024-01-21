@@ -14,6 +14,7 @@ class Database:
         self.connection.execute(query.CREATE_REGISTER_TABLE)
         self.connection.execute(query.CREATE_FEED_OFFER_TABLE)
         self.connection.execute(query.CREATE_LIKE_DISLIKE_TABLE)
+        self.connection.execute(query.CREATE_USER_COMLAIN_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
         self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name))
@@ -81,3 +82,13 @@ class Database:
     def insert_like_dislike_table(self,user,liker,what):
         self.cursor.execute(query.INSERT_LIKE_DISLIKE_TABLE,(None,user,liker,what))
         self.connection.commit()
+    def insert_complain_table(self,complainer_id,badman_id,reason):
+        self.cursor.execute(query.INSERT_USER_COMLAIN_TABLE,(None,complainer_id,badman_id,reason,1))
+        self.connection.commit()
+    def update_complain_table(self,reason,badman_id):
+        self.cursor.execute(query.UPDATE_USER_COMLAIN_TABLE,(reason,badman_id))
+        self.connection.commit()
+    def select_count_complain_table(self,bad_id):
+        self.cursor.execute(query.SELECT_COUNT_COMLAIN_TABLE,(bad_id,))
+        row=self.cursor.fetchone()
+        return row

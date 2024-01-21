@@ -124,3 +124,21 @@ LEFT JOIN like_dislike ON registers.tg_id = like_dislike.user_tg_id
 AND like_dislike.liker_tg_id = ?
 WHERE like_dislike.ID IS NULL
 AND registers.tg_id != ?'''
+
+CREATE_USER_COMLAIN_TABLE = '''CREATE TABLE IF NOT EXISTS user_comlain(
+ID INTEGER PRIMARY KEY,
+COMPLAINER_TG_ID INTEGER,
+BAD_MAN_TG_ID INTEGER,
+REASON TEXT,
+COUNTT INTEGER,
+UNIQUE (BAD_MAN_TG_ID)
+)'''
+
+INSERT_USER_COMLAIN_TABLE = '''
+INSERT INTO user_comlain VALUES (?,?,?,?,?)'''
+
+UPDATE_USER_COMLAIN_TABLE = '''
+UPDATE user_comlain SET COUNTT=COUNTT+1,REASON=? WHERE BAD_MAN_TG_ID=?'''
+
+SELECT_COUNT_COMLAIN_TABLE = '''
+SELECT COUNTT FROM user_comlain WHERE BAD_MAN_TG_ID=?'''
