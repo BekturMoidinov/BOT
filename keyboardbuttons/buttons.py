@@ -81,3 +81,10 @@ async def like_dislike(user):
     qb2=InlineKeyboardButton("Dislike👎",callback_data=f'Dislike_{user}')
     markup.add(qb1,qb2)
     return markup
+
+async def chance_confirm(id):
+    markup = InlineKeyboardMarkup()
+    a=InlineKeyboardButton("Chance🍀",callback_data=f'chance_{id}')
+    b=InlineKeyboardButton("Confirm😐",callback_data=f'confirm_{id}')
+    markup.add(a,b)
+    return markup

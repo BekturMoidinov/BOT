@@ -79,15 +79,23 @@ class Database:
     def insert_like_dislike_table(self,user,liker,what):
         self.cursor.execute(query.INSERT_LIKE_DISLIKE_TABLE,(None,user,liker,what))
         self.connection.commit()
-    def insert_complain_table(self,complainer_id,badman_id,reason):
-        self.cursor.execute(query.INSERT_USER_COMLAIN_TABLE,(None,complainer_id,badman_id,reason,1))
+    def insert_complain_table(self,complainer_id,user_name,first_name,badman_id,reason):
+        self.cursor.execute(query.INSERT_USER_COMLAIN_TABLE,(None,complainer_id,user_name,first_name,badman_id,reason,1))
         self.connection.commit()
     def update_complain_table(self,reason,badman_id):
         self.cursor.execute(query.UPDATE_USER_COMLAIN_TABLE,(reason,badman_id))
         self.connection.commit()
+
+    def update_count_complain_table(self,badman_id):
+        self.cursor.execute(query.UPDATE_COUNT_USER_COMPLAIN_TABLE,(badman_id,))
+        self.connection.commit()
     def select_count_complain_table(self,bad_id):
         self.cursor.execute(query.SELECT_COUNT_COMLAIN_TABLE,(bad_id,))
         row=self.cursor.fetchone()
+        return row
+    def select_username_complain_table(self):
+        self.cursor.execute(query.SELECT_USERNAME_FIRST_NAME_COMLAIN_TABLE)
+        row=self.cursor.fetchall()
         return row
     def insert_feedback_problem_table(self,tg_id,idea,problem):
         self.cursor.execute(query.INSERT_FEEDBACK_PROBLEM_TABLE,(None,tg_id,idea,problem))
