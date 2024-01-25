@@ -3,7 +3,7 @@ from database import query
 
 class Database:
     def __init__(self):
-        self.connection = sqlite3.connect('db.sql')
+        self.connection = sqlite3.connect('db.sqlite3')
         self.cursor = self.connection.cursor()
     def create_table(self):
         if self.connection:
