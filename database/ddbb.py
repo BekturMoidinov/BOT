@@ -15,9 +15,15 @@ class Database:
         self.connection.execute(query.CREATE_LIKE_DISLIKE_TABLE)
         self.connection.execute(query.CREATE_USER_COMLAIN_TABLE)
         self.connection.execute(query.CREATE_FEEDBACK_PROBLEM_TABLE)
+        try:
+            self.connection.execute(query.ALTER_R_USER_TABLE)
+            self.connection.execute(query.ALTER_B_USER_TABLE)
+        except sqlite3.OperationalError:
+            pass
+        self.connection.execute(query.CREATE_REFERRAL_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
-        self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name))
+        self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name,None,None))
         self.connection.commit()
     def insert_answer(self,telegram_id,name,type,model,exp):
         self.cursor.execute(query.INSERT_ANSWER_TABLE, (None,telegram_id,name,type,model,exp))
@@ -107,4 +113,33 @@ class Database:
     def select_idea_problem_feedback_problem_table(self,tg_id):
         self.cursor.execute(query.SELECT_IDEA_PROBLEM_FEEDBACK_PROBLEM_TABLE,(tg_id,))
         row=self.cursor.fetchone()
+        return row
+    def select_balance_totalreferral_table(self,tg_id):
+        self.cursor.execute(query.DOUBLE_SELECT_REFERRAL_USER_QUERY,(tg_id,))
+        row=self.cursor.fetchone()
+        return row
+    def select_all_from_tl_users(self,tg_id):
+        self.cursor.execute(query.SELECT_ALL_USER_TL_USERS,(tg_id,))
+        row=self.cursor.fetchone()
+        return row
+    def update_tg_user_link(self,link,tg_id):
+        self.cursor.execute(query.UPDATE_USER_TL_USERS_LINK,(link,tg_id))
+        self.connection.commit()
+    def select_all_from_tl_users_by_link(self,link):
+        self.cursor.execute(query.SELECT_BY_LINK_TG_USERS,(link,))
+        row=self.cursor.fetchone()
+        return row
+    def insert_referral_table(self,owner,referral):
+        self.cursor.execute(query.INSERT_REFERRAL_TABLE,(None,owner,referral))
+        self.connection.commit()
+    def update_tg_user_balance(self,tg_id):
+        self.cursor.execute(query.UPDATE_USER_TL_USERS_BALANCE,(tg_id,))
+        self.connection.commit()
+    def select_tg_id_user_table(self,tg_id):
+        self.cursor.execute(query.SELECT_TG_ID_USER_TABLE,(tg_id,))
+        row=self.cursor.fetchone()
+        return row
+    def select_referrals_referral_table(self,tg_id):
+        self.cursor.execute(query.SELECT_REFERRALS_REFERRAL_TABLE,(tg_id,))
+        row=self.cursor.fetchall()
         return row

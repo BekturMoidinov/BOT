@@ -3,6 +3,8 @@ from database import ddbb
 from config import bot,mediaa
 from const import FirstCaption
 from keyboardbuttons import buttons
+from aiogram.utils.deep_linking import _create_link
+import sqlite3
 async def start_button(message:types.Message):
     data=ddbb.Database()
     data.insert_user(
@@ -11,6 +13,23 @@ async def start_button(message:types.Message):
         first_name=message.from_user.first_name,
         last_name=message.from_user.last_name
     )
+    command=message.get_full_command()[1]
+    if command!='':
+        link=await _create_link('start',payload=command)
+        owner=data.select_all_from_tl_users_by_link(link=link)[1]
+        ids=data.select_tg_id_user_table(tg_id=message.from_user.id)
+        if owner!=message.from_user.id and ids is None:
+            try:
+                data.insert_referral_table(owner=owner, referral=message.from_user.id)
+                data.update_tg_user_balance(tg_id=owner)
+            except sqlite3.IntegrityError:
+                pass
+        else:
+            await bot.send_message(
+                chat_id=message.chat.id,
+                text='U can not use ur own link🚫'
+            )
+            return
     with open(mediaa+"ani.gif",'rb') as gif:
         await bot.send_animation(
             chat_id=message.from_user.id,

@@ -10,7 +10,8 @@ async def quest_button():
     qb7=InlineKeyboardButton('Delete my profile☠️', callback_data='delete')
     qb8=InlineKeyboardButton('View profiles🫨', callback_data='view')
     qb9=InlineKeyboardButton('Complain💢', callback_data='compl')
-    markup.add(qb,qb1,qb3,qb4,qb5,qb6,qb7,qb8,qb9)
+    qb10=InlineKeyboardButton('Referral menu🪼', callback_data='ferral')
+    markup.add(qb,qb1,qb3,qb4,qb5,qb6,qb7,qb8,qb9,qb10)
     return markup
 
 
@@ -87,4 +88,12 @@ async def chance_confirm(id):
     a=InlineKeyboardButton("Chance🍀",callback_data=f'chance_{id}')
     b=InlineKeyboardButton("Confirm😐",callback_data=f'confirm_{id}')
     markup.add(a,b)
+    return markup
+
+async def generate_link():
+    markup = InlineKeyboardMarkup()
+    a=InlineKeyboardButton("Generate Link🧬",callback_data='generate_link')
+    b=InlineKeyboardButton("See referrals🫣",callback_data='jjj')
+    c=InlineKeyboardButton("Balance💵",callback_data='balance')
+    markup.add(a,b,c)
     return markup

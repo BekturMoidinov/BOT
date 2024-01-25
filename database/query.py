@@ -6,14 +6,24 @@ username CHAR(20) ,
 first_name CHAR(20),
 last_name CHAR(20),
 UNIQUE(telegram_user_id)
-)
-'''
+)'''
+
+ALTER_R_USER_TABLE = """
+ALTER TABLE telegram_users ADD COLUMN REFERENCE_LINK TEXT
+"""
+
+ALTER_B_USER_TABLE = """
+ALTER TABLE telegram_users ADD COLUMN BALANCE INTEGER
+"""
+
+
+
 SELECT_FROM_USER_TABLE = '''
 SELECT telegram_user_id,first_name FROM telegram_users
 '''
 
 INSERT_USER_TABLE = '''
-INSERT OR IGNORE INTO telegram_users  VALUES (?,?, ?, ?, ?)
+INSERT OR IGNORE INTO telegram_users  VALUES (?,?, ?, ?, ?,?,?)
 '''
 
 CREATE_ANSWER_TABLE = '''
@@ -60,9 +70,11 @@ SELECT countt FROM bans WHERE tg_id=?
 UPDATE_BAN_TABLE_COUNT = '''
 UPDATE bans SET countt=countt+1 WHERE tg_id=?
 '''
+
 DELETE_USER = '''
 DELETE FROM bans WHERE tg_id=?
 '''
+
 SELECT_USER_FROM_BAN = '''
 SELECT tg_id,first_name,countt FROM bans'''
 
@@ -158,3 +170,44 @@ SELECT tg_id FROM feedback_problem'''
 
 SELECT_IDEA_PROBLEM_FEEDBACK_PROBLEM_TABLE = '''
 SELECT idea,problem FROM feedback_problem WHERE tg_id=?'''
+
+
+CREATE_REFERRAL_TABLE = """
+CREATE TABLE IF NOT EXISTS referral 
+(
+ID INTEGER PRIMARY KEY,
+OWNER_TG_ID INTEGER,
+REFERRAL_TG_ID INTEGER,
+UNIQUE (OWNER_TG_ID, REFERRAL_TG_ID)
+)
+"""
+
+DOUBLE_SELECT_REFERRAL_USER_QUERY = """
+SELECT
+    COALESCE(telegram_users.BALANCE, 0) as BALANCE,
+    COUNT(referral.ID) as total_referrals
+FROM
+    telegram_users
+LEFT JOIN
+    referral ON telegram_users.telegram_user_id = referral.OWNER_TG_ID
+WHERE
+    telegram_users.telegram_user_id = ?
+"""
+
+SELECT_ALL_USER_TL_USERS = '''
+SELECT * FROM telegram_users WHERE telegram_user_id=?'''
+
+UPDATE_USER_TL_USERS_LINK = '''UPDATE telegram_users SET REFERENCE_LINK=? WHERE telegram_user_id=?'''
+
+SELECT_BY_LINK_TG_USERS = '''SELECT * FROM telegram_users WHERE REFERENCE_LINK=?'''
+
+INSERT_REFERRAL_TABLE = '''
+INSERT INTO referral VALUES (?,?,?)'''
+
+UPDATE_USER_TL_USERS_BALANCE = '''UPDATE telegram_users SET BALANCE=COALESCE(BALANCE,0)+100 WHERE telegram_user_id=?'''
+
+SELECT_TG_ID_USER_TABLE='''
+SELECT telegram_user_id FROM telegram_users WHERE telegram_user_id='''
+
+SELECT_REFERRALS_REFERRAL_TABLE='''
+SELECT REFERRAL_TG_ID FROM referral WHERE OWNER_TG_ID=?'''

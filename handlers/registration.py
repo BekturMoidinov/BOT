@@ -157,6 +157,8 @@ async def load_photo(m:types.Message,state:FSMContext):
             chat_id=m.from_user.id,
             text='U have successfully updated profile🎉'
         )
+
+
     await state.finish()
 def registr_reg_handler(dp:Dispatcher):
     dp.register_callback_query_handler(register_begin,lambda call:call.data in ("reg","update"))
