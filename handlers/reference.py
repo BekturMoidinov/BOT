@@ -5,6 +5,8 @@ from database import ddbb
 from aiogram.utils.deep_linking import _create_link
 import os
 import binascii
+from aiogram.dispatcher import FSMContext
+from aiogram.dispatcher.filters.state import State, StatesGroup
 
 async def reference_menu(call: types.CallbackQuery):
     datab=ddbb.Database()
@@ -47,13 +49,86 @@ async def see_referrals(call: types.CallbackQuery):
     )
 async def balance(call: types.CallbackQuery):
     datab=ddbb.Database()
-    balance=datab.select_all_from_tl_users(tg_id=call.from_user.id)[6]
+    balance=datab.select_balance(tg=call.from_user.id)[0]
     await bot.send_message(
         chat_id=call.from_user.id,
         text=f'Your balance: {balance}'
     )
+class Send_money(StatesGroup):
+    first_name=State()
+    amount=State()
+async def send_money(call: types.CallbackQuery):
+    await bot.send_message(
+        chat_id=call.from_user.id,
+        text="Who do u want send money for?\n"
+             "Write user's first_name🥸"
+    )
+    await Send_money.first_name.set()
+
+async def load_first_name(m: types.Message,state: FSMContext ):
+    datab=ddbb.Database()
+    all=datab.select_user()
+    names=[i[1] for i in all]
+    if m.text in names:
+        async with state.proxy() as data:
+            data['first_name']=m.text
+        await bot.send_message(
+            chat_id=m.from_user.id,
+            text='Okay, How much would u like to give?'
+        )
+        await Send_money.next()
+    else:
+        await bot.send_message(
+            chat_id=m.from_user.id,
+            text='Sorry,there is no user with that name'
+        )
+        await state.finish()
+
+async def load_amount(m: types.Message,state:FSMContext ):
+    datab=ddbb.Database()
+    all = datab.select_user()
+    balance=datab.select_balance(tg=m.from_user.id)[0]
+    names = [i[1] for i in all]
+    ids = [i[0] for i in all]
+    if m.text.isdigit():
+        if int(m.text) <= balance:
+            async with state.proxy() as data:
+                data['amount']=int(m.text)
+                datab.insert_transactions(
+                    sender=m.from_user.id,
+                    taker=ids[names.index(data['first_name'])],
+                    amount=int(m.text)
+                )
+                datab.update_tl_user_balance_minus(amount=data['amount'],tg_id=m.from_user.id)
+                datab.update_tl_user_balance_minus(amount=-data['amount'],tg_id=ids[names.index(data['first_name'])])
+            await bot.send_message(
+                chat_id=m.from_user.id,
+                text='U have successfully sent your money🎉🤑'
+            )
+            await state.finish()
+        else:
+            await bot.send_message(
+                chat_id=m.from_user.id,
+                text='Sorry, u dont have enough money to sending🥸\n'
+                     'Start again to resend.'
+            )
+            await state.finish()
+    else:
+        await bot.send_message(
+            chat_id=m.from_user.id,
+            text='Write only digits!!😡\n'
+                 'Start again to resend.'
+
+        )
+        await state.finish()
+
+
+
 def register_referrence(dp:Dispatcher):
     dp.register_callback_query_handler(reference_menu,lambda call:call.data=='ferral')
     dp.register_callback_query_handler(generate_link,lambda call:call.data=='generate_link')
     dp.register_callback_query_handler(see_referrals,lambda call:call.data=='jjj')
     dp.register_callback_query_handler(balance,lambda call:call.data=='balance')
+    dp.register_callback_query_handler(send_money,lambda call:call.data=='send')
+    dp.register_message_handler(load_first_name,state=Send_money.first_name,content_types=['text'])
+    dp.register_message_handler(load_amount,state=Send_money.amount,content_types=['text'])

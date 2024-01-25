@@ -94,6 +94,7 @@ async def generate_link():
     markup = InlineKeyboardMarkup()
     a=InlineKeyboardButton("Generate Link🧬",callback_data='generate_link')
     b=InlineKeyboardButton("See referrals🫣",callback_data='jjj')
-    c=InlineKeyboardButton("Balance💵",callback_data='balance')
-    markup.add(a,b,c)
+    c=InlineKeyboardButton("Balance💴",callback_data='balance')
+    d=InlineKeyboardButton("Send money💸",callback_data='send')
+    markup.add(a,b,c,d)
     return markup

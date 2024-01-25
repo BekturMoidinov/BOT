@@ -21,6 +21,7 @@ class Database:
         except sqlite3.OperationalError:
             pass
         self.connection.execute(query.CREATE_REFERRAL_TABLE)
+        self.connection.execute(query.CREAT_TRANSACTIONS_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
         self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name,None,None))
@@ -142,4 +143,14 @@ class Database:
     def select_referrals_referral_table(self,tg_id):
         self.cursor.execute(query.SELECT_REFERRALS_REFERRAL_TABLE,(tg_id,))
         row=self.cursor.fetchall()
+        return row
+    def insert_transactions(self,sender,taker,amount):
+        self.cursor.execute(query.INSERT_TRANSACTIONS_TABLE,(None,sender,taker,amount))
+        self.connection.commit()
+    def update_tl_user_balance_minus(self,amount,tg_id):
+        self.cursor.execute(query.UPDATE_USER_TL_USERS_BALANCE_MINUS,(amount,tg_id))
+        self.connection.commit()
+    def select_balance(self,tg):
+        self.cursor.execute(query.SELECT_BALANCE_TL_USERS,(tg,))
+        row=self.cursor.fetchone()
         return row

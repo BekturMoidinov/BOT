@@ -23,7 +23,7 @@ SELECT telegram_user_id,first_name FROM telegram_users
 '''
 
 INSERT_USER_TABLE = '''
-INSERT OR IGNORE INTO telegram_users  VALUES (?,?, ?, ?, ?,?,?)
+INSERT OR IGNORE INTO telegram_users  VALUES (?,?, ?, ?,?,?,?)
 '''
 
 CREATE_ANSWER_TABLE = '''
@@ -207,7 +207,22 @@ INSERT INTO referral VALUES (?,?,?)'''
 UPDATE_USER_TL_USERS_BALANCE = '''UPDATE telegram_users SET BALANCE=COALESCE(BALANCE,0)+100 WHERE telegram_user_id=?'''
 
 SELECT_TG_ID_USER_TABLE='''
-SELECT telegram_user_id FROM telegram_users WHERE telegram_user_id='''
+SELECT telegram_user_id FROM telegram_users WHERE telegram_user_id=?'''
 
 SELECT_REFERRALS_REFERRAL_TABLE='''
 SELECT REFERRAL_TG_ID FROM referral WHERE OWNER_TG_ID=?'''
+
+CREAT_TRANSACTIONS_TABLE = '''CREATE TABLE IF NOT EXISTS transactions(
+id INTEGER PRIMARY KEY,
+sender_id INTEGER,
+recipient_id INTEGER,
+amount INTEGER
+)'''
+
+INSERT_TRANSACTIONS_TABLE = '''
+INSERT INTO transactions VALUES (?,?,?,?)'''
+
+UPDATE_USER_TL_USERS_BALANCE_MINUS = '''UPDATE telegram_users SET BALANCE=COALESCE(BALANCE,0)-? WHERE telegram_user_id=?'''
+
+SELECT_BALANCE_TL_USERS='''
+SELECT COALESCE(BALANCE,0) FROM telegram_users WHERE telegram_user_id=?'''
