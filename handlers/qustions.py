@@ -129,7 +129,7 @@ async def rewrite_ask(call: types.CallbackQuery):
         reply_markup=await buttons.question_for_transpot_type('Air✈️', 'Car🚗', 'Train🚂', 'Bus🚌')
     )
 
-t=['/','#','&','^','$','{','@','%']
+t=['я','ю','&','^','$','{','@','%']
 h=set(t)
 def register_ask(dp: Dispatcher):
     dp.register_callback_query_handler(ask, lambda call: call.data == "question_base")

@@ -11,7 +11,8 @@ async def quest_button():
     qb8=InlineKeyboardButton('View profiles🫨', callback_data='view')
     qb9=InlineKeyboardButton('Complain💢', callback_data='compl')
     qb10=InlineKeyboardButton('Referral menu🪼', callback_data='ferral')
-    markup.add(qb,qb1,qb3,qb4,qb5,qb6,qb7,qb8,qb9,qb10)
+    qb11=InlineKeyboardButton('Check menu🧾', callback_data='check')
+    markup.add(qb,qb1,qb3,qb4,qb5,qb6,qb7,qb8,qb9,qb10,qb11)
     return markup
 
 
@@ -28,7 +29,7 @@ async def question_for_transpot_type(var1,var2,var3,var4):
 async def model_airplane(var1,var2,ex):
     markup = InlineKeyboardMarkup()
     air1=InlineKeyboardButton(var1, callback_data='@'+','+var1+','+ex)
-    air2=InlineKeyboardButton(var2, callback_data='#'+','+var2+','+ex)
+    air2=InlineKeyboardButton(var2, callback_data='ю'+','+var2+','+ex)
     markup.add(air1,air2)
     return markup
 
@@ -51,7 +52,7 @@ async def model_train(var1,var2,ex):
 
 async def model_bus(var1,var2,ex):
     markup = InlineKeyboardMarkup()
-    bus1=InlineKeyboardButton(var1, callback_data='/'+','+var1+','+ex)
+    bus1=InlineKeyboardButton(var1, callback_data='я'+','+var1+','+ex)
     bus2=InlineKeyboardButton(var2,callback_data='&'+','+var2+','+ex)
     markup.add(bus1,bus2)
     return markup
@@ -97,4 +98,16 @@ async def generate_link():
     c=InlineKeyboardButton("Balance💴",callback_data='balance')
     d=InlineKeyboardButton("Send money💸",callback_data='send')
     markup.add(a,b,c,d)
+    return markup
+
+async def check_generate():
+    markup = InlineKeyboardMarkup()
+    a=InlineKeyboardButton("Create check©️",callback_data='create_check')
+    markup.add(a)
+    return markup
+
+async def use_check(link):
+    markup = InlineKeyboardMarkup()
+    a=InlineKeyboardButton("Use check🎟️",callback_data=f'usecheck_{link}')
+    markup.add(a)
     return markup

@@ -226,3 +226,24 @@ UPDATE_USER_TL_USERS_BALANCE_MINUS = '''UPDATE telegram_users SET BALANCE=COALES
 
 SELECT_BALANCE_TL_USERS='''
 SELECT COALESCE(BALANCE,0) FROM telegram_users WHERE telegram_user_id=?'''
+
+
+
+CREATE_CHECK_TABLE = '''CREATE TABLE IF NOT EXISTS checks(
+id INTEGER PRIMARY KEY,
+sender_id INTEGER,
+taker_id INTEGER,
+reason TEXT,
+amount INTEGER,
+check_link TEXT,
+status CHAR(20)
+)'''
+
+
+INSERT_CHECK_TABLE = '''
+INSERT INTO checks VALUES (?,?,?,?,?,?,?)'''
+
+SELECT_CHECK_TABLE = '''
+SELECT * FROM checks WHERE check_link=?'''
+
+UPDATE_CHECK_TABLE = '''UPDATE checks SET taker_id=?,status=? WHERE check_link=?'''

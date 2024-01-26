@@ -15,6 +15,7 @@ class Database:
         self.connection.execute(query.CREATE_LIKE_DISLIKE_TABLE)
         self.connection.execute(query.CREATE_USER_COMLAIN_TABLE)
         self.connection.execute(query.CREATE_FEEDBACK_PROBLEM_TABLE)
+        self.connection.execute(query.CREATE_CHECK_TABLE)
         try:
             self.connection.execute(query.ALTER_R_USER_TABLE)
             self.connection.execute(query.ALTER_B_USER_TABLE)
@@ -154,3 +155,13 @@ class Database:
         self.cursor.execute(query.SELECT_BALANCE_TL_USERS,(tg,))
         row=self.cursor.fetchone()
         return row
+    def insert_check_table(self,sender,reason,amount,link):
+        self.cursor.execute(query.INSERT_CHECK_TABLE,(None,sender,None,reason,amount,link,None))
+        self.connection.commit()
+    def select_check_table(self,link):
+        self.cursor.execute(query.SELECT_CHECK_TABLE,(link,))
+        row=self.cursor.fetchone()
+        return row
+    def update_check_table(self,taker,status,link):
+        self.cursor.execute(query.UPDATE_CHECK_TABLE,(taker,status,link))
+        self.connection.commit()
