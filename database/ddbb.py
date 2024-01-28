@@ -173,3 +173,7 @@ class Database:
     def insert_favo_eng_table(self,tg_id,link):
         self.cursor.execute(query.INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE,(None,tg_id,link))
         self.connection.commit()
+    def select_id_fav_table(self,tg_id,link):
+        self.cursor.execute(query.SELECT_FAV_ENG_LEVEL_TABLE,(tg_id,link))
+        row=self.cursor.fetchone()
+        return row

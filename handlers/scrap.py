@@ -21,10 +21,13 @@ async def english_adv(call: types.CallbackQuery):
 async def eng_favourite(call: types.CallbackQuery):
     await call.message.delete()
     datab=ddbb.Database()
-    datab.insert_favo_eng_table(
-        tg_id=call.from_user.id,
-        link=call.data[5:]
-    )
+    check=datab.select_id_fav_table(tg_id=call.from_user.id,link=call.data[5:])
+    print(check)
+    if check is None:
+        datab.insert_favo_eng_table(
+            tg_id=call.from_user.id,
+            link=call.data[5:]
+        )
 
 def register_scrap(dp: Dispatcher):
     dp.register_callback_query_handler(english_adv, lambda call:call.data=='advanced')

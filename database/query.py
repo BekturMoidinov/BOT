@@ -16,8 +16,6 @@ ALTER_B_USER_TABLE = """
 ALTER TABLE telegram_users ADD COLUMN BALANCE INTEGER
 """
 
-
-
 SELECT_FROM_USER_TABLE = '''
 SELECT telegram_user_id,first_name FROM telegram_users
 '''
@@ -49,7 +47,7 @@ SELECT first_name,transport_type,model,experience FROM answers
 SELECT_USER_FROM_ANSWER = '''
 SELECT telegram_user_id FROM answers WHERE telegram_user_id=?
 '''
-SELECT_ALL_ID_ANSWER='''
+SELECT_ALL_ID_ANSWER = '''
 SELECT telegram_user_id FROM answers
 '''
 CREATE_BAN_TABLE = '''
@@ -107,8 +105,7 @@ SELECT * FROM registers'''
 DELETE_REGISTER_TABLE = '''
 DELETE FROM registers WHERE tg_id=?'''
 
-
-CREATE_LIKE_DISLIKE_TABLE ='''
+CREATE_LIKE_DISLIKE_TABLE = '''
 CREATE TABLE IF NOT EXISTS like_dislike(
 ID INTEGER PRIMARY KEY,
 user_tg_id INTEGER,
@@ -119,7 +116,7 @@ UNIQUE (user_tg_id, liker_tg_id)
 INSERT_LIKE_DISLIKE_TABLE = '''
 INSERT INTO like_dislike VALUES (?,?,?,?)'''
 
-FILTER_LEFT_JOIN='''
+FILTER_LEFT_JOIN = '''
 SELECT * FROM registers
 LEFT JOIN like_dislike ON registers.tg_id = like_dislike.user_tg_id
 AND like_dislike.liker_tg_id = ?
@@ -171,7 +168,6 @@ SELECT tg_id FROM feedback_problem'''
 SELECT_IDEA_PROBLEM_FEEDBACK_PROBLEM_TABLE = '''
 SELECT idea,problem FROM feedback_problem WHERE tg_id=?'''
 
-
 CREATE_REFERRAL_TABLE = """
 CREATE TABLE IF NOT EXISTS referral 
 (
@@ -206,10 +202,10 @@ INSERT INTO referral VALUES (?,?,?)'''
 
 UPDATE_USER_TL_USERS_BALANCE = '''UPDATE telegram_users SET BALANCE=COALESCE(BALANCE,0)+100 WHERE telegram_user_id=?'''
 
-SELECT_TG_ID_USER_TABLE='''
+SELECT_TG_ID_USER_TABLE = '''
 SELECT telegram_user_id FROM telegram_users WHERE telegram_user_id=?'''
 
-SELECT_REFERRALS_REFERRAL_TABLE='''
+SELECT_REFERRALS_REFERRAL_TABLE = '''
 SELECT REFERRAL_TG_ID FROM referral WHERE OWNER_TG_ID=?'''
 
 CREAT_TRANSACTIONS_TABLE = '''CREATE TABLE IF NOT EXISTS transactions(
@@ -222,12 +218,11 @@ amount INTEGER
 INSERT_TRANSACTIONS_TABLE = '''
 INSERT INTO transactions VALUES (?,?,?,?)'''
 
-UPDATE_USER_TL_USERS_BALANCE_MINUS = '''UPDATE telegram_users SET BALANCE=COALESCE(BALANCE,0)-? WHERE telegram_user_id=?'''
+UPDATE_USER_TL_USERS_BALANCE_MINUS = '''UPDATE telegram_users SET BALANCE=COALESCE(BALANCE,0)-? WHERE 
+telegram_user_id=?'''
 
-SELECT_BALANCE_TL_USERS='''
+SELECT_BALANCE_TL_USERS = '''
 SELECT COALESCE(BALANCE,0) FROM telegram_users WHERE telegram_user_id=?'''
-
-
 
 CREATE_CHECK_TABLE = '''CREATE TABLE IF NOT EXISTS checks(
 id INTEGER PRIMARY KEY,
@@ -239,7 +234,6 @@ check_link TEXT,
 status CHAR(20)
 )'''
 
-
 INSERT_CHECK_TABLE = '''
 INSERT INTO checks VALUES (?,?,?,?,?,?,?)'''
 
@@ -248,17 +242,18 @@ SELECT * FROM checks WHERE check_link=?'''
 
 UPDATE_CHECK_TABLE = '''UPDATE checks SET taker_id=?,status=? WHERE check_link=?'''
 
-CREATE_ENGLISH_LEVEL_LEARN_TABLE='''CREATE TABLE IF NOT EXISTS eng_level_table(
+CREATE_ENGLISH_LEVEL_LEARN_TABLE = '''CREATE TABLE IF NOT EXISTS eng_level_table(
 id INTEGER PRIMARY KEY,
 link TEXT,
 UNIQUE(link))'''
 
-INSERT_ENGLISH_LEVEL_LEARN_TABLE='''INSERT OR IGNORE INTO eng_level_table VALUES (?,?)'''
+INSERT_ENGLISH_LEVEL_LEARN_TABLE = '''INSERT OR IGNORE INTO eng_level_table VALUES (?,?)'''
 
-CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE='''CREATE TABLE IF NOT EXISTS favourite_eng_level_table(
+CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE = '''CREATE TABLE IF NOT EXISTS favourite_eng_level_table(
 id INTEGER PRIMARY KEY,
 tg_user_id INTEGER,
 link TEXT)'''
 
-INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE='''INSERT INTO favourite_eng_level_table VALUES (?,?,?)'''
+INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE = '''INSERT INTO favourite_eng_level_table VALUES (?,?,?)'''
 
+SELECT_FAV_ENG_LEVEL_TABLE = '''SELECT * FROM favourite_eng_level_table WHERE tg_user_id=? AND link=?'''
