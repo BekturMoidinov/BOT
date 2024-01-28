@@ -12,7 +12,8 @@ async def quest_button():
     qb9=InlineKeyboardButton('Complain💢', callback_data='compl')
     qb10=InlineKeyboardButton('Referral menu🪼', callback_data='ferral')
     qb11=InlineKeyboardButton('Check menu🧾', callback_data='check')
-    markup.add(qb,qb1,qb3,qb4,qb5,qb6,qb7,qb8,qb9,qb10,qb11)
+    qb12=InlineKeyboardButton('Advanced level(English)🦥', callback_data='advanced')
+    markup.add(qb,qb1,qb3,qb4,qb5,qb6,qb7,qb8,qb9,qb10,qb11,qb12)
     return markup
 
 
@@ -109,5 +110,11 @@ async def check_generate():
 async def use_check(link):
     markup = InlineKeyboardMarkup()
     a=InlineKeyboardButton("Use check🎟️",callback_data=f'usecheck_{link}')
+    markup.add(a)
+    return markup
+
+async def save(link):
+    markup = InlineKeyboardMarkup()
+    a=InlineKeyboardButton("Save😋",callback_data=f'save,{link}')
     markup.add(a)
     return markup

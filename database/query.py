@@ -247,3 +247,18 @@ SELECT_CHECK_TABLE = '''
 SELECT * FROM checks WHERE check_link=?'''
 
 UPDATE_CHECK_TABLE = '''UPDATE checks SET taker_id=?,status=? WHERE check_link=?'''
+
+CREATE_ENGLISH_LEVEL_LEARN_TABLE='''CREATE TABLE IF NOT EXISTS eng_level_table(
+id INTEGER PRIMARY KEY,
+link TEXT,
+UNIQUE(link))'''
+
+INSERT_ENGLISH_LEVEL_LEARN_TABLE='''INSERT OR IGNORE INTO eng_level_table VALUES (?,?)'''
+
+CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE='''CREATE TABLE IF NOT EXISTS favourite_eng_level_table(
+id INTEGER PRIMARY KEY,
+tg_user_id INTEGER,
+link TEXT)'''
+
+INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE='''INSERT INTO favourite_eng_level_table VALUES (?,?,?)'''
+

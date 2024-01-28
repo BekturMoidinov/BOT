@@ -23,6 +23,8 @@ class Database:
             pass
         self.connection.execute(query.CREATE_REFERRAL_TABLE)
         self.connection.execute(query.CREAT_TRANSACTIONS_TABLE)
+        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE)
+        self.connection.execute(query.CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
         self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name,None,None))
@@ -164,4 +166,10 @@ class Database:
         return row
     def update_check_table(self,taker,status,link):
         self.cursor.execute(query.UPDATE_CHECK_TABLE,(taker,status,link))
+        self.connection.commit()
+    def insert_eng_table(self,link):
+        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE,(None,link))
+        self.connection.commit()
+    def insert_favo_eng_table(self,tg_id,link):
+        self.cursor.execute(query.INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE,(None,tg_id,link))
         self.connection.commit()

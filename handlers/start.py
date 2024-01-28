@@ -71,5 +71,7 @@ async def start_button(message:types.Message):
                 reply_markup=await buttons.quest_button(),
             )
 
+
+
 def register_start_handler(dp:Dispatcher):
     dp.register_message_handler(start_button, commands="start")
