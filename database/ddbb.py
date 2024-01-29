@@ -177,3 +177,10 @@ class Database:
         self.cursor.execute(query.SELECT_FAV_ENG_LEVEL_TABLE,(tg_id,link))
         row=self.cursor.fetchone()
         return row
+    def select_link_fav_table(self,tg_id):
+        self.cursor.execute(query.SELECT_LINK_FAV_TABLE,(tg_id,))
+        rows=self.cursor.fetchall()
+        return rows
+    def delete_fav_eng_table(self,link):
+        self.cursor.execute(query.DELETE_FAV_ENG_LEVEL_TABLE,(link,))
+        self.connection.commit()

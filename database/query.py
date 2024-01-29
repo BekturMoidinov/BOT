@@ -256,4 +256,8 @@ link TEXT)'''
 
 INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE = '''INSERT INTO favourite_eng_level_table VALUES (?,?,?)'''
 
-SELECT_FAV_ENG_LEVEL_TABLE = '''SELECT * FROM favourite_eng_level_table WHERE tg_user_id=? AND link=?'''
+SELECT_FAV_ENG_LEVEL_TABLE = '''SELECT id FROM favourite_eng_level_table WHERE tg_user_id=? AND link=?'''
+
+SELECT_LINK_FAV_TABLE= '''SELECT link FROM favourite_eng_level_table WHERE tg_user_id=?'''
+
+DELETE_FAV_ENG_LEVEL_TABLE = '''DELETE FROM favourite_eng_level_table WHERE link=?'''
