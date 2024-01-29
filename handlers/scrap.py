@@ -49,7 +49,7 @@ async def find_users(call:types.CallbackQuery):
         chat_id=call.from_user.id,
         text='Here are the list of users who also prefer that material😁:'
     )
-    if ids:
+    if len(ids)>1:
         for id in ids:
             if id[0] != call.from_user.id:
                 await bot.send_message(
