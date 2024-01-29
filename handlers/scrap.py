@@ -49,12 +49,18 @@ async def find_users(call:types.CallbackQuery):
         chat_id=call.from_user.id,
         text='Here are the list of users who also prefer that material😁:'
     )
-    for id in ids:
-        if id[0]!=call.from_user.id:
-            await bot.send_message(
-                chat_id=call.from_user.id,
-                text=f'tg://user?id={id[0]}'
-            )
+    if ids:
+        for id in ids:
+            if id[0] != call.from_user.id:
+                await bot.send_message(
+                    chat_id=call.from_user.id,
+                    text=f'tg://user?id={id[0]}'
+                )
+    else:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text='No users'
+        )
 def register_scrap(dp: Dispatcher):
     dp.register_callback_query_handler(english_adv, lambda call:call.data=='advanced')
     dp.register_callback_query_handler(eng_favourite_save, lambda call:call.data.startswith('save'))
