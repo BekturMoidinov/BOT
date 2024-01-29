@@ -184,3 +184,7 @@ class Database:
     def delete_fav_eng_table(self,link):
         self.cursor.execute(query.DELETE_FAV_ENG_LEVEL_TABLE,(link,))
         self.connection.commit()
+    def select_tg_user_id_fav_table(self,link):
+        self.cursor.execute(query.SELECT_USER_ID_FAV_TABLE,(link,))
+        rows=self.cursor.fetchall()
+        return rows

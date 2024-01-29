@@ -42,8 +42,22 @@ async def eng_favourites_delete(call: types.CallbackQuery):
     datab=ddbb.Database()
     datab.delete_fav_eng_table(link=call.data[4:])
 
+async def find_users(call:types.CallbackQuery):
+    datab=ddbb.Database()
+    ids=datab.select_tg_user_id_fav_table(link=call.data[5:])
+    await bot.send_message(
+        chat_id=call.from_user.id,
+        text='Here are the list of users who also prefer that material😁:'
+    )
+    for id in ids:
+        if id[0]!=call.from_user.id:
+            await bot.send_message(
+                chat_id=call.from_user.id,
+                text=f'tg://user?id={id[0]}'
+            )
 def register_scrap(dp: Dispatcher):
     dp.register_callback_query_handler(english_adv, lambda call:call.data=='advanced')
     dp.register_callback_query_handler(eng_favourite_save, lambda call:call.data.startswith('save'))
     dp.register_callback_query_handler(eng_favourites_show, lambda call:call.data=='show')
     dp.register_callback_query_handler(eng_favourites_delete, lambda call:call.data.startswith('del'))
+    dp.register_callback_query_handler(find_users, lambda call:call.data.startswith('find'))

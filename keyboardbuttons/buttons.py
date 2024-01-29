@@ -134,5 +134,6 @@ async def save(link):
 async def fav_delete(links):
     markup = InlineKeyboardMarkup()
     a = InlineKeyboardButton("Delete🍁", callback_data=f'del,{links}')
-    markup.add(a)
+    b = InlineKeyboardButton("Find others who saved", callback_data=f'find,{links}')
+    markup.add(a,b)
     return markup

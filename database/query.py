@@ -261,3 +261,5 @@ SELECT_FAV_ENG_LEVEL_TABLE = '''SELECT id FROM favourite_eng_level_table WHERE t
 SELECT_LINK_FAV_TABLE= '''SELECT link FROM favourite_eng_level_table WHERE tg_user_id=?'''
 
 DELETE_FAV_ENG_LEVEL_TABLE = '''DELETE FROM favourite_eng_level_table WHERE link=?'''
+
+SELECT_USER_ID_FAV_TABLE = '''SELECT tg_user_id FROM favourite_eng_level_table WHERE link=?'''
