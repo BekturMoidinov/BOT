@@ -45,11 +45,11 @@ async def eng_favourites_delete(call: types.CallbackQuery):
 async def find_users(call:types.CallbackQuery):
     datab=ddbb.Database()
     ids=datab.select_tg_user_id_fav_table(link=call.data[5:])
-    await bot.send_message(
-        chat_id=call.from_user.id,
-        text='Here are the list of users who also prefer that material😁:'
-    )
     if len(ids)>1:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text='Here are the list of users who also prefer that material😁:'
+        )
         for id in ids:
             if id[0] != call.from_user.id:
                 await bot.send_message(
