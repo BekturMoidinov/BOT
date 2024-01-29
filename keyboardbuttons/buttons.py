@@ -85,7 +85,7 @@ async def rewrite():
 
 
 async def like_dislike(user):
-    markup = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup(row_width=1)
     qb1 = InlineKeyboardButton("Like👍", callback_data=f'Like_{user}')
     qb2 = InlineKeyboardButton("Dislike👎", callback_data=f'Dislike_{user}')
     markup.add(qb1, qb2)
@@ -93,7 +93,7 @@ async def like_dislike(user):
 
 
 async def chance_confirm(id):
-    markup = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup(row_width=1)
     a = InlineKeyboardButton("Chance🍀", callback_data=f'chance_{id}')
     b = InlineKeyboardButton("Confirm😐", callback_data=f'confirm_{id}')
     markup.add(a, b)
@@ -101,7 +101,7 @@ async def chance_confirm(id):
 
 
 async def generate_link():
-    markup = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup(row_width=1)
     a = InlineKeyboardButton("Generate Link🧬", callback_data='generate_link')
     b = InlineKeyboardButton("See referrals🫣", callback_data='jjj')
     c = InlineKeyboardButton("Balance💴", callback_data='balance')
@@ -132,7 +132,7 @@ async def save(link):
 
 
 async def fav_delete(links):
-    markup = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup(row_width=1)
     a = InlineKeyboardButton("Delete🍁", callback_data=f'del,{links}')
     b = InlineKeyboardButton("Find others who saved", callback_data=f'find,{links}')
     markup.add(a,b)
