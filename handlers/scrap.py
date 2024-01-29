@@ -16,7 +16,11 @@ async def english_adv(call: types.CallbackQuery):
     for link in links[:5]:
         datab.insert_eng_table(link=link)
         await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))
+    # await bot.send_message(chat_id=call.from_user.id, text='Press clear to clear materials',reply_markup= await buttons.clear())
 
+# async def clear(call: types.CallbackQuery):
+#     await call.message.delete()
+#     await call.message.delete()
 
 async def eng_favourite_save(call: types.CallbackQuery):
     datab=ddbb.Database()
@@ -45,25 +49,22 @@ async def eng_favourites_delete(call: types.CallbackQuery):
 async def find_users(call:types.CallbackQuery):
     datab=ddbb.Database()
     ids=datab.select_tg_user_id_fav_table(link=call.data[5:])
-    if len(ids)>1:
+    users=[f'tg://user?id={id[0]}' for id in ids if id[0]!= call.from_user.id]
+    if users:
         await bot.send_message(
             chat_id=call.from_user.id,
-            text='Here are the list of users who also prefer that material😁:'
+            text=f'Here are the list of users who also prefer that material😁:\n'
+                 f'{users}'
         )
-        for id in ids:
-            if id[0] != call.from_user.id:
-                await bot.send_message(
-                    chat_id=call.from_user.id,
-                    text=f'tg://user?id={id[0]}'
-                )
     else:
         await bot.send_message(
             chat_id=call.from_user.id,
             text='No users'
         )
 def register_scrap(dp: Dispatcher):
-    dp.register_callback_query_handler(english_adv, lambda call:call.data=='advanced')
+    dp.register_callback_query_handler(english_adv, lambda call:call.data == 'advanced')
+    # dp.register_callback_query_handler(clear, lambda call:call.data == 'clear')
     dp.register_callback_query_handler(eng_favourite_save, lambda call:call.data.startswith('save'))
-    dp.register_callback_query_handler(eng_favourites_show, lambda call:call.data=='show')
-    dp.register_callback_query_handler(eng_favourites_delete, lambda call:call.data.startswith('del'))
+    dp.register_callback_query_handler(eng_favourites_show, lambda call:call.data == 'show')
+    dp.register_callback_query_handler(eng_favourites_delete, lambda call : call.data.startswith('del'))
     dp.register_callback_query_handler(find_users, lambda call:call.data.startswith('find'))

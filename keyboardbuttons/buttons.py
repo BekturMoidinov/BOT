@@ -130,6 +130,11 @@ async def save(link):
     markup.add(a)
     return markup
 
+async def clear():
+    markup = InlineKeyboardMarkup()
+    a = InlineKeyboardButton("Clear", callback_data='clear')
+    markup.add(a)
+    return markup
 
 async def fav_delete(links):
     markup = InlineKeyboardMarkup(row_width=1)
