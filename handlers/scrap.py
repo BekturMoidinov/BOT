@@ -16,7 +16,7 @@ async def english_adv(call: types.CallbackQuery):
     for link in links[0][:5]:
         datab.insert_eng_table(link=link)
         await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))
-    # await bot.send_message(chat_id=call.from_user.id, text='Press clear to clear materials',reply_markup= await buttons.clear())
+
 async def english_b2(call: types.CallbackQuery):
     datab=ddbb.Database()
     scrapper = AsyncEnglishScrapper()
@@ -48,9 +48,7 @@ async def english_a1(call: types.CallbackQuery):
     for link in links[4][:5]:
         datab.insert_eng_table_a1(link=link)
         await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))
-# async def clear(call: types.CallbackQuery):
-#     await call.message.delete()
-#     await call.message.delete()
+
 
 async def eng_favourite_save(call: types.CallbackQuery):
     datab=ddbb.Database()
@@ -93,7 +91,6 @@ async def find_users(call:types.CallbackQuery):
         )
 def register_scrap(dp: Dispatcher):
     dp.register_callback_query_handler(english_adv, lambda call:call.data == 'advanced')
-    # dp.register_callback_query_handler(clear, lambda call:call.data == 'clear')
     dp.register_callback_query_handler(eng_favourite_save, lambda call:call.data.startswith('save'))
     dp.register_callback_query_handler(eng_favourites_show, lambda call:call.data == 'show')
     dp.register_callback_query_handler(eng_favourites_delete, lambda call : call.data.startswith('del'))
