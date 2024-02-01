@@ -13,11 +13,41 @@ async def english_adv(call: types.CallbackQuery):
     datab=ddbb.Database()
     scrapper = AsyncEnglishScrapper()
     links=await scrapper.get_page()
-    for link in links[:5]:
+    for link in links[0][:5]:
         datab.insert_eng_table(link=link)
         await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))
     # await bot.send_message(chat_id=call.from_user.id, text='Press clear to clear materials',reply_markup= await buttons.clear())
+async def english_b2(call: types.CallbackQuery):
+    datab=ddbb.Database()
+    scrapper = AsyncEnglishScrapper()
+    links=await scrapper.get_page()
+    for link in links[1][:5]:
+        datab.insert_eng_table_b2(link=link)
+        await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))
 
+async def english_b1(call: types.CallbackQuery):
+    datab=ddbb.Database()
+    scrapper = AsyncEnglishScrapper()
+    links=await scrapper.get_page()
+    for link in links[2][:5]:
+        datab.insert_eng_table_b1(link=link)
+        await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))
+
+async def english_a2(call: types.CallbackQuery):
+    datab=ddbb.Database()
+    scrapper = AsyncEnglishScrapper()
+    links=await scrapper.get_page()
+    for link in links[3][:5]:
+        datab.insert_eng_table_a2(link=link)
+        await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))
+
+async def english_a1(call: types.CallbackQuery):
+    datab=ddbb.Database()
+    scrapper = AsyncEnglishScrapper()
+    links=await scrapper.get_page()
+    for link in links[4][:5]:
+        datab.insert_eng_table_a1(link=link)
+        await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))
 # async def clear(call: types.CallbackQuery):
 #     await call.message.delete()
 #     await call.message.delete()
@@ -68,3 +98,7 @@ def register_scrap(dp: Dispatcher):
     dp.register_callback_query_handler(eng_favourites_show, lambda call:call.data == 'show')
     dp.register_callback_query_handler(eng_favourites_delete, lambda call : call.data.startswith('del'))
     dp.register_callback_query_handler(find_users, lambda call:call.data.startswith('find'))
+    dp.register_callback_query_handler(english_b2,lambda call:call.data == 'upperInt')
+    dp.register_callback_query_handler(english_b1,lambda call:call.data == 'inter')
+    dp.register_callback_query_handler(english_a2,lambda call:call.data == 'ele')
+    dp.register_callback_query_handler(english_a1,lambda call:call.data == 'begin')

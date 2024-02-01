@@ -25,6 +25,10 @@ class Database:
         self.connection.execute(query.CREAT_TRANSACTIONS_TABLE)
         self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE)
         self.connection.execute(query.CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE)
+        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_B2)
+        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_B1)
+        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_A2)
+        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_A1)
         self.connection.execute(query.CREATE_ADMIN_RATING_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
@@ -170,6 +174,18 @@ class Database:
         self.connection.commit()
     def insert_eng_table(self,link):
         self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE,(None,link))
+        self.connection.commit()
+    def insert_eng_table_b2(self,link):
+        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_B2,(None,link))
+        self.connection.commit()
+    def insert_eng_table_b1(self,link):
+        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_B1,(None,link))
+        self.connection.commit()
+    def insert_eng_table_a2(self,link):
+        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_A2,(None,link))
+        self.connection.commit()
+    def insert_eng_table_a1(self,link):
+        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_A1,(None,link))
         self.connection.commit()
     def insert_favo_eng_table(self,tg_id,link):
         self.cursor.execute(query.INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE,(None,tg_id,link))
