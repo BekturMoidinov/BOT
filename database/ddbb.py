@@ -25,6 +25,7 @@ class Database:
         self.connection.execute(query.CREAT_TRANSACTIONS_TABLE)
         self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE)
         self.connection.execute(query.CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE)
+        self.connection.execute(query.CREATE_ADMIN_RATING_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
         self.cursor.execute(query.INSERT_USER_TABLE, (None,telegram_id,username,first_name,last_name,None,None))
@@ -188,3 +189,6 @@ class Database:
         self.cursor.execute(query.SELECT_USER_ID_FAV_TABLE,(link,))
         rows=self.cursor.fetchall()
         return rows
+    def insert_admin_rating(self,admin,tg_id,rating):
+        self.cursor.execute(query.INSERT_ADMIN_RATING_TABLE,(tg_id,admin,rating))
+        self.connection.commit()

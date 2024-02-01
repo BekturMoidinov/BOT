@@ -263,3 +263,12 @@ SELECT_LINK_FAV_TABLE= '''SELECT link FROM favourite_eng_level_table WHERE tg_us
 DELETE_FAV_ENG_LEVEL_TABLE = '''DELETE FROM favourite_eng_level_table WHERE link=?'''
 
 SELECT_USER_ID_FAV_TABLE = '''SELECT tg_user_id FROM favourite_eng_level_table WHERE link=?'''
+
+CREATE_ADMIN_RATING_TABLE = '''CREATE TABLE IF NOT EXISTS admin_ratings (
+id INTEGER PRIMARY KEY,
+admin_tg_id INTEGER,
+user_tg_id INTEGER,
+raiting INTEGER
+)'''
+
+INSERT_ADMIN_RATING_TABLE = '''INSERT INTO admin_ratings VALUES (?,?,?,?)'''

@@ -7,12 +7,12 @@ import os
 import binascii
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
-from scrapping.english_scrapper import EnglishScrapper
-
+from scrapping.asyncscrap import AsyncEnglishScrapper
+import asyncio
 async def english_adv(call: types.CallbackQuery):
     datab=ddbb.Database()
-    scrapper = EnglishScrapper()
-    links=scrapper.parse_data()
+    scrapper = AsyncEnglishScrapper()
+    links=await scrapper.get_page()
     for link in links[:5]:
         datab.insert_eng_table(link=link)
         await bot.send_message(chat_id=call.from_user.id, text=link,reply_markup=await buttons.save(link))

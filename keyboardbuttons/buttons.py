@@ -142,3 +142,16 @@ async def fav_delete(links):
     b = InlineKeyboardButton("Find others who saved", callback_data=f'find,{links}')
     markup.add(a,b)
     return markup
+
+async def answer_go_back(id):
+    markup = InlineKeyboardMarkup(row_width=1)
+    a = InlineKeyboardButton("Answer", callback_data=f'ans,{id}')
+    b = InlineKeyboardButton("Go back", callback_data='go')
+    markup.add(a,b)
+    return markup
+
+async def skip():
+    markup = InlineKeyboardMarkup(row_width=1)
+    a = InlineKeyboardButton("Skip", callback_data='skip')
+    markup.add(a)
+    return markup
