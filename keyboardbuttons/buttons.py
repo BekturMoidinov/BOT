@@ -14,13 +14,14 @@ async def quest_button():
     qb9 = InlineKeyboardButton('Complain💢', callback_data='compl')
     qb10 = InlineKeyboardButton('Referral menu🪼', callback_data='ferral')
     qb11 = InlineKeyboardButton('Check menu🧾', callback_data='check')
-    qb12 = InlineKeyboardButton('Advanced level(English)🦥', callback_data='advanced')
-    qb13 = InlineKeyboardButton('Upper Int level', callback_data='upperInt')
-    qb14 = InlineKeyboardButton('Intermediate level(English)',callback_data='inter')
-    qb15 = InlineKeyboardButton('Elementary level(English)',callback_data='ele')
-    qb16 = InlineKeyboardButton('Beginners level(English)',callback_data='begin')
-    qb17 = InlineKeyboardButton('Show saved material🌱', callback_data='show')
-    markup.add(qb, qb1, qb3, qb4, qb5, qb6, qb7, qb8, qb9, qb10, qb11, qb12, qb13,qb14, qb15, qb16,qb17)
+    # qb12 = InlineKeyboardButton('Advanced level(English)🦥', callback_data='advanced')
+    # qb13 = InlineKeyboardButton('Upper Int level', callback_data='upperInt')
+    # qb14 = InlineKeyboardButton('Intermediate level(English)',callback_data='inter')
+    # qb15 = InlineKeyboardButton('Elementary level(English)',callback_data='ele')
+    # qb16 = InlineKeyboardButton('Beginners level(English)',callback_data='begin')
+    # qb17 = InlineKeyboardButton('Show saved material🌱', callback_data='show')
+    qb18 = InlineKeyboardButton('AI🤖', callback_data='ai')
+    markup.add(qb, qb1, qb3, qb4, qb5, qb6, qb7, qb8, qb9, qb10, qb11, qb18)
     return markup
 
 
@@ -147,15 +148,16 @@ async def fav_delete(links):
     markup.add(a,b)
     return markup
 
-async def answer_go_back(id):
+async def answer_go_back():
     markup = InlineKeyboardMarkup(row_width=1)
-    a = InlineKeyboardButton("Answer", callback_data=f'ans,{id}')
+    a = InlineKeyboardButton("Answer", callback_data='ans')
     b = InlineKeyboardButton("Go back", callback_data='go')
     markup.add(a,b)
     return markup
 
-async def skip():
+async def skip_rate():
     markup = InlineKeyboardMarkup(row_width=1)
     a = InlineKeyboardButton("Skip", callback_data='skip')
-    markup.add(a)
+    b = InlineKeyboardButton("Rate", callback_data='rate')
+    markup.add(a,b)
     return markup

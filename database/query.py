@@ -242,62 +242,69 @@ SELECT * FROM checks WHERE check_link=?'''
 
 UPDATE_CHECK_TABLE = '''UPDATE checks SET taker_id=?,status=? WHERE check_link=?'''
 
-CREATE_ENGLISH_LEVEL_LEARN_TABLE = '''CREATE TABLE IF NOT EXISTS eng_level_table(
-id INTEGER PRIMARY KEY,
-link TEXT,
-UNIQUE(link))'''
+# CREATE_ENGLISH_LEVEL_LEARN_TABLE = '''CREATE TABLE IF NOT EXISTS eng_level_table(
+# id INTEGER PRIMARY KEY,
+# link TEXT,
+# UNIQUE(link))'''
 
 
-INSERT_ENGLISH_LEVEL_LEARN_TABLE = '''INSERT OR IGNORE INTO eng_level_table VALUES (?,?)'''
+# INSERT_ENGLISH_LEVEL_LEARN_TABLE = '''INSERT OR IGNORE INTO eng_level_table VALUES (?,?)'''
+#
+# CREATE_ENGLISH_LEVEL_LEARN_TABLE_B2 = '''CREATE TABLE IF NOT EXISTS eng_level_table_b2(
+# id INTEGER PRIMARY KEY,
+# link TEXT,
+# UNIQUE(link))'''
+#
+# INSERT_ENGLISH_LEVEL_LEARN_TABLE_B2 = '''INSERT OR IGNORE INTO eng_level_table_b2 VALUES (?,?)'''
+#
+# CREATE_ENGLISH_LEVEL_LEARN_TABLE_B1 = '''CREATE TABLE IF NOT EXISTS eng_level_table_b1(
+# id INTEGER PRIMARY KEY,
+# link TEXT,
+# UNIQUE(link))'''
+#
+# INSERT_ENGLISH_LEVEL_LEARN_TABLE_B1 = '''INSERT OR IGNORE INTO eng_level_table_b1 VALUES (?,?)'''
+#
+# CREATE_ENGLISH_LEVEL_LEARN_TABLE_A2 = '''CREATE TABLE IF NOT EXISTS eng_level_table_a2(
+# id INTEGER PRIMARY KEY,
+# link TEXT,
+# UNIQUE(link))'''
+#
+# INSERT_ENGLISH_LEVEL_LEARN_TABLE_A2 = '''INSERT OR IGNORE INTO eng_level_table_a2 VALUES (?,?)'''
+#
+# CREATE_ENGLISH_LEVEL_LEARN_TABLE_A1 = '''CREATE TABLE IF NOT EXISTS eng_level_table_a1(
+# id INTEGER PRIMARY KEY,
+# link TEXT,
+# UNIQUE(link))'''
 
-CREATE_ENGLISH_LEVEL_LEARN_TABLE_B2 = '''CREATE TABLE IF NOT EXISTS eng_level_table_b2(
-id INTEGER PRIMARY KEY,
-link TEXT,
-UNIQUE(link))'''
+# INSERT_ENGLISH_LEVEL_LEARN_TABLE_A1 = '''INSERT OR IGNORE INTO eng_level_table_a1 VALUES (?,?)'''
 
-INSERT_ENGLISH_LEVEL_LEARN_TABLE_B2 = '''INSERT OR IGNORE INTO eng_level_table_b2 VALUES (?,?)'''
+# CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE = '''CREATE TABLE IF NOT EXISTS favourite_eng_level_table(
+# id INTEGER PRIMARY KEY,
+# tg_user_id INTEGER,
+# link TEXT)'''
 
-CREATE_ENGLISH_LEVEL_LEARN_TABLE_B1 = '''CREATE TABLE IF NOT EXISTS eng_level_table_b1(
-id INTEGER PRIMARY KEY,
-link TEXT,
-UNIQUE(link))'''
-
-INSERT_ENGLISH_LEVEL_LEARN_TABLE_B1 = '''INSERT OR IGNORE INTO eng_level_table_b1 VALUES (?,?)'''
-
-CREATE_ENGLISH_LEVEL_LEARN_TABLE_A2 = '''CREATE TABLE IF NOT EXISTS eng_level_table_a2(
-id INTEGER PRIMARY KEY,
-link TEXT,
-UNIQUE(link))'''
-
-INSERT_ENGLISH_LEVEL_LEARN_TABLE_A2 = '''INSERT OR IGNORE INTO eng_level_table_a2 VALUES (?,?)'''
-
-CREATE_ENGLISH_LEVEL_LEARN_TABLE_A1 = '''CREATE TABLE IF NOT EXISTS eng_level_table_a1(
-id INTEGER PRIMARY KEY,
-link TEXT,
-UNIQUE(link))'''
-
-INSERT_ENGLISH_LEVEL_LEARN_TABLE_A1 = '''INSERT OR IGNORE INTO eng_level_table_a1 VALUES (?,?)'''
-
-CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE = '''CREATE TABLE IF NOT EXISTS favourite_eng_level_table(
-id INTEGER PRIMARY KEY,
-tg_user_id INTEGER,
-link TEXT)'''
-
-INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE = '''INSERT INTO favourite_eng_level_table VALUES (?,?,?)'''
-
-SELECT_FAV_ENG_LEVEL_TABLE = '''SELECT id FROM favourite_eng_level_table WHERE tg_user_id=? AND link=?'''
-
-SELECT_LINK_FAV_TABLE= '''SELECT link FROM favourite_eng_level_table WHERE tg_user_id=?'''
-
-DELETE_FAV_ENG_LEVEL_TABLE = '''DELETE FROM favourite_eng_level_table WHERE link=?'''
-
-SELECT_USER_ID_FAV_TABLE = '''SELECT tg_user_id FROM favourite_eng_level_table WHERE link=?'''
+# INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE = '''INSERT INTO favourite_eng_level_table VALUES (?,?,?)'''
+#
+# SELECT_FAV_ENG_LEVEL_TABLE = '''SELECT id FROM favourite_eng_level_table WHERE tg_user_id=? AND link=?'''
+#
+# SELECT_LINK_FAV_TABLE= '''SELECT link FROM favourite_eng_level_table WHERE tg_user_id=?'''
+#
+# DELETE_FAV_ENG_LEVEL_TABLE = '''DELETE FROM favourite_eng_level_table WHERE link=?'''
+#
+# SELECT_USER_ID_FAV_TABLE = '''SELECT tg_user_id FROM favourite_eng_level_table WHERE link=?'''
 
 CREATE_ADMIN_RATING_TABLE = '''CREATE TABLE IF NOT EXISTS admin_ratings (
 id INTEGER PRIMARY KEY,
 admin_tg_id INTEGER,
 user_tg_id INTEGER,
-raiting INTEGER
+raiting INTEGER,
+UNIQUE(user_tg_id)
 )'''
 
-INSERT_ADMIN_RATING_TABLE = '''INSERT INTO admin_ratings VALUES (?,?,?,?)'''
+INSERT_ADMIN_RATING_TABLE = '''INSERT OR IGNORE INTO admin_ratings VALUES (?,?,?,?)'''
+
+DELETE_FEEDB_PROBLEM_TABLE = '''DELETE FROM feedback_problem WHERE tg_id=?'''
+
+UPDATE_ADMIN_RATING_TABLE = '''UPDATE admin_ratings SET raiting=? WHERE user_tg_id=?'''
+
+SELECT_ADMIN_RATING_TABLE = '''SELECT raiting FROM admin_ratings WHERE admin_tg_id=? AND raiting IS NOT NULL'''

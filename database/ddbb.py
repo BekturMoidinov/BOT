@@ -23,12 +23,12 @@ class Database:
             pass
         self.connection.execute(query.CREATE_REFERRAL_TABLE)
         self.connection.execute(query.CREAT_TRANSACTIONS_TABLE)
-        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE)
-        self.connection.execute(query.CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE)
-        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_B2)
-        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_B1)
-        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_A2)
-        self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_A1)
+        # self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE)
+        # self.connection.execute(query.CREATE_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE)
+        # self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_B2)
+        # self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_B1)
+        # self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_A2)
+        # self.connection.execute(query.CREATE_ENGLISH_LEVEL_LEARN_TABLE_A1)
         self.connection.execute(query.CREATE_ADMIN_RATING_TABLE)
         self.connection.commit()
     def insert_user(self,telegram_id,username,first_name,last_name):
@@ -172,39 +172,49 @@ class Database:
     def update_check_table(self,taker,status,link):
         self.cursor.execute(query.UPDATE_CHECK_TABLE,(taker,status,link))
         self.connection.commit()
-    def insert_eng_table(self,link):
-        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE,(None,link))
+    # def insert_eng_table(self,link):
+    #     self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE,(None,link))
+    #     self.connection.commit()
+    # def insert_eng_table_b2(self,link):
+    #     self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_B2,(None,link))
+    #     self.connection.commit()
+    # def insert_eng_table_b1(self,link):
+    #     self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_B1,(None,link))
+    #     self.connection.commit()
+    # def insert_eng_table_a2(self,link):
+    #     self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_A2,(None,link))
+    #     self.connection.commit()
+    # def insert_eng_table_a1(self,link):
+    #     self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_A1,(None,link))
+    #     self.connection.commit()
+    # def insert_favo_eng_table(self,tg_id,link):
+    #     self.cursor.execute(query.INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE,(None,tg_id,link))
+    #     self.connection.commit()
+    # def select_id_fav_table(self,tg_id,link):
+    #     self.cursor.execute(query.SELECT_FAV_ENG_LEVEL_TABLE,(tg_id,link))
+    #     row=self.cursor.fetchone()
+    #     return row
+    # def select_link_fav_table(self,tg_id):
+    #     self.cursor.execute(query.SELECT_LINK_FAV_TABLE,(tg_id,))
+    #     rows=self.cursor.fetchall()
+    #     return rows
+    # def delete_fav_eng_table(self,link):
+    #     self.cursor.execute(query.DELETE_FAV_ENG_LEVEL_TABLE,(link,))
+    #     self.connection.commit()
+    # def select_tg_user_id_fav_table(self,link):
+    #     self.cursor.execute(query.SELECT_USER_ID_FAV_TABLE,(link,))
+    #     rows=self.cursor.fetchall()
+    #     return rows
+    def insert_admin_rating(self,admin,tg_id):
+        self.cursor.execute(query.INSERT_ADMIN_RATING_TABLE,(None,admin,tg_id,None))
         self.connection.commit()
-    def insert_eng_table_b2(self,link):
-        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_B2,(None,link))
+    def update_admin_rating_rating(self,rating,tg_id):
+        self.cursor.execute(query.UPDATE_ADMIN_RATING_TABLE,(rating,tg_id))
         self.connection.commit()
-    def insert_eng_table_b1(self,link):
-        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_B1,(None,link))
+    def delete_feedb_probl_table(self,tg):
+        self.cursor.execute(query.DELETE_FEEDB_PROBLEM_TABLE,(tg,))
         self.connection.commit()
-    def insert_eng_table_a2(self,link):
-        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_A2,(None,link))
-        self.connection.commit()
-    def insert_eng_table_a1(self,link):
-        self.cursor.execute(query.INSERT_ENGLISH_LEVEL_LEARN_TABLE_A1,(None,link))
-        self.connection.commit()
-    def insert_favo_eng_table(self,tg_id,link):
-        self.cursor.execute(query.INSERT_FAVOURITE_ENGLISH_LEVEL_LEARN_TABLE,(None,tg_id,link))
-        self.connection.commit()
-    def select_id_fav_table(self,tg_id,link):
-        self.cursor.execute(query.SELECT_FAV_ENG_LEVEL_TABLE,(tg_id,link))
-        row=self.cursor.fetchone()
+    def select_admin_rating_table(self,tg_id):
+        self.cursor.execute(query.SELECT_ADMIN_RATING_TABLE,(tg_id,))
+        row=self.cursor.fetchall()
         return row
-    def select_link_fav_table(self,tg_id):
-        self.cursor.execute(query.SELECT_LINK_FAV_TABLE,(tg_id,))
-        rows=self.cursor.fetchall()
-        return rows
-    def delete_fav_eng_table(self,link):
-        self.cursor.execute(query.DELETE_FAV_ENG_LEVEL_TABLE,(link,))
-        self.connection.commit()
-    def select_tg_user_id_fav_table(self,link):
-        self.cursor.execute(query.SELECT_USER_ID_FAV_TABLE,(link,))
-        rows=self.cursor.fetchall()
-        return rows
-    def insert_admin_rating(self,admin,tg_id,rating):
-        self.cursor.execute(query.INSERT_ADMIN_RATING_TABLE,(tg_id,admin,rating))
-        self.connection.commit()

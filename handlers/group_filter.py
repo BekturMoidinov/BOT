@@ -1,12 +1,13 @@
 from aiogram import types, Dispatcher
 from aiogram.types import Update
-from config import bot,chat1_id,admin
+from config import bot,chat1_id,admin1,admin2
 from keyboardbuttons import buttons
 from database import ddbb
 from profanity_check import predict_prob
 from time import sleep
 
 async def group_filter_message(m: types.Message):
+        print(m.text)
         datab=ddbb.Database()
         bad_word=predict_prob([m.text])
         if bad_word>0.7:
@@ -47,8 +48,8 @@ async def cout_all_users(m:types.Message):
         if m.text == "See all users📃":
             user = data.select_user()
             if user is not None:
-                user_id = [i[0] for i in user if i[0]!=int(admin)]
-                user_name = [i[1] for i in user if i[0]!=int(admin)]
+                user_id = [i[0] for i in user if i[0] not in (int(admin1),int(admin2))]
+                user_name = [i[1] for i in user if i[0] not in (int(admin1),int(admin2))]
                 l = user_id.copy()
                 await bot.send_message(
                     chat_id=m.from_user.id,
@@ -78,8 +79,8 @@ async def cout_all_users(m:types.Message):
         elif m.text == "See all bad users👿":
             userban = data.seletc_from_ban()
             if userban != None:
-                user_ban_id = [i[0] for i in userban if i[0]!=int(admin)]
-                user_ban_name= [i[1:] for i in userban if i[0]!=int(admin)]
+                user_ban_id = [i[0] for i in userban if i[0] not in (int(admin1),int(admin2))]
+                user_ban_name= [i[1:] for i in userban if i[0] not in (int(admin1),int(admin2))]
                 ll = user_ban_id.copy()
                 await bot.send_message(
                     chat_id=m.from_user.id
@@ -136,4 +137,4 @@ async def cout_all_users(m:types.Message):
                 )
 def register_group_filter( dp: Dispatcher):
     dp.register_message_handler(group_filter_message,lambda m:m.chat.id==int(chat1_id))
-    dp.register_message_handler(cout_all_users,lambda m:m.chat.id==int(admin))
+    dp.register_message_handler(cout_all_users,lambda m:m.chat.id in (int(admin1),int(admin2)))

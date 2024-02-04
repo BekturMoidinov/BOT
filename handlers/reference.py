@@ -1,5 +1,5 @@
 from aiogram import types, Dispatcher
-from config import bot,admin
+from config import bot,admin1,admin2
 from keyboardbuttons import buttons
 from database import ddbb
 from aiogram.utils.deep_linking import _create_link
@@ -58,12 +58,20 @@ class Send_money(StatesGroup):
     first_name=State()
     amount=State()
 async def send_money(call: types.CallbackQuery):
-    await bot.send_message(
-        chat_id=call.from_user.id,
-        text="Who do u want send money for?\n"
-             "Write user's first_name🥸"
-    )
-    await Send_money.first_name.set()
+    datab = ddbb.Database()
+    balance = datab.select_balance(tg=call.from_user.id)[0]
+    if balance!=0:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="Who do u want send money for?\n"
+                 "Write user's first_name🥸"
+        )
+        await Send_money.first_name.set()
+    else:
+        await bot.send_message(
+            chat_id=call.from_user.id,
+            text="U cant send money. Ur balance is 0!"
+        )
 
 async def load_first_name(m: types.Message,state: FSMContext ):
     datab=ddbb.Database()

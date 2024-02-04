@@ -70,6 +70,7 @@ async def start_button(message:types.Message):
                 caption=FirstCaption.format(name=message.from_user.first_name),
                 reply_markup=await buttons.quest_button(),
             )
+        await bot.send_
 
 
 

@@ -1,5 +1,5 @@
 from aiogram import types, Dispatcher
-from config import bot,admin
+from config import bot,admin1,admin2
 from keyboardbuttons import buttons
 from database import ddbb
 async def ask(call: types.CallbackQuery):
@@ -20,6 +20,7 @@ async def ask(call: types.CallbackQuery):
         )
 
 async def answer_airmodel(call: types.CallbackQuery):
+    await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Wich plane do like most:",
@@ -28,6 +29,7 @@ async def answer_airmodel(call: types.CallbackQuery):
 
 
 async def answer_carmodel(call: types.CallbackQuery):
+    await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Wich car do like most:",
@@ -36,6 +38,7 @@ async def answer_carmodel(call: types.CallbackQuery):
 
 
 async def answer_Busmodel(call: types.CallbackQuery):
+    await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Wich bus do like most:",
@@ -44,6 +47,7 @@ async def answer_Busmodel(call: types.CallbackQuery):
 
 
 async def answer_trainmodel(call: types.CallbackQuery):
+    await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Wich train do like most:",
@@ -52,6 +56,7 @@ async def answer_trainmodel(call: types.CallbackQuery):
 
 
 async def yesno_answer(call: types.CallbackQuery):
+    await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Have u ever been on it:",
@@ -60,8 +65,8 @@ async def yesno_answer(call: types.CallbackQuery):
 
 
 async def thanks(call: types.CallbackQuery):
+    await call.message.delete()
     gg=call.data.split(',')
-    print(gg)
     database=ddbb.Database()
     await bot.send_message(
         chat_id=call.from_user.id,
@@ -84,6 +89,7 @@ async def thanks(call: types.CallbackQuery):
         )
 
 async def answer_for_ban(call: types.CallbackQuery):
+
     datab=ddbb.Database()
     count=datab.select_count_bun_table(tg_id=call.from_user.id)
     if count:
@@ -103,9 +109,9 @@ async def answer_for_ban(call: types.CallbackQuery):
 async def warn_user(call: types.CallbackQuery):
     data=ddbb.Database()
     userban = data.seletc_from_ban()
-    user_ban_id = [i[0] for i in userban if i[0] != int(admin)]
-    user_ban_name = [i[1:] for i in userban if i[0] != int(admin)]
-    user_ban_count=[i[2] for i in userban if i[0]!=int(admin)]
+    user_ban_id = [i[0] for i in userban if i[0] not in (int(admin1),int(admin2))]
+    user_ban_name = [i[1:] for i in userban if i[0] not in (int(admin1),int(admin2))]
+    user_ban_count=[i[2] for i in userban if i[0] not in (int(admin1),int(admin2))]
     for i in range(len(user_ban_id)):
         try:
             await bot.send_message(
@@ -113,7 +119,8 @@ async def warn_user(call: types.CallbackQuery):
                 , text=f"Hi {user_ban_name[i][0]}\n"
                        f"U have written {user_ban_count[i]} bad word\n"
                        "If u do it 3rd time\n"
-                       "U will be bunned📛"
+                       "U will be bunned📛\n"
+                       "HAYVAN BAHCHE!!!"
             )
         except Exception as e:
             pass
@@ -123,6 +130,7 @@ async def warn_user(call: types.CallbackQuery):
     )
 
 async def rewrite_ask(call: types.CallbackQuery):
+    await call.message.delete()
     await bot.send_message(
         chat_id=call.from_user.id,
         text="Type of transport u prefer:",

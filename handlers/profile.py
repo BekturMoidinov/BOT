@@ -54,7 +54,7 @@ async def view_random_profile(call: types.CallbackQuery):
             )
     else:
         await bot.send_message(
-            chat_id=call.from_user.id, text='U have already liked all profiles'
+            chat_id=call.from_user.id, text='Nobody left'
         )
 async def like_dislike_management(call: types.CallbackQuery):
     data=ddbb.Database()

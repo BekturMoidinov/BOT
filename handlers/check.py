@@ -1,12 +1,15 @@
-from aiogram import types, Dispatcher
-from config import bot,admin
-from keyboardbuttons import buttons
-from database import ddbb
-from aiogram.utils.deep_linking import _create_link
-import os
 import binascii
+import os
+
+from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
+from aiogram.utils.deep_linking import _create_link
+
+from config import bot
+from database import ddbb
+from keyboardbuttons import buttons
+
 
 async def check_menu(call: types.CallbackQuery):
     await bot.send_message(
@@ -21,12 +24,10 @@ class CreatCheck(StatesGroup):
 async def create_check(call: types.CallbackQuery):
     await bot.send_message(
         chat_id=call.from_user.id,
-        text='Check creation is running...'
+        text='Check creation is running...\n'
+             'What you are creating check for?'
     )
-    await bot.send_message(
-        chat_id=call.from_user.id,
-        text='What you are creating check for?'
-    )
+
     await CreatCheck.reason.set()
 
 async def load_reason(m: types.Message,state: FSMContext):
@@ -62,6 +63,7 @@ async def load_amount(m: types.Message,state:FSMContext):
                              f'Send this link to people who will receive check\n'
                              f'Be careful!'
                     )
+                    datab.update_tl_user_balance_minus(amount=data['amount'], tg_id=m.from_user.id)
                 await state.finish()
             else:
                 await bot.send_message(
@@ -96,7 +98,6 @@ async def use_check(call: types.CallbackQuery):
     if status != 'used':
         sender_id = datab.select_check_table(link=link)[1]
         amount = datab.select_check_table(link=link)[4]
-        datab.update_tl_user_balance_minus(amount=amount, tg_id=sender_id)
         datab.update_tl_user_balance_minus(amount=-amount, tg_id=call.from_user.id)
         datab.update_check_table(taker=call.from_user.id, status='used', link=link)
         await bot.send_message(
