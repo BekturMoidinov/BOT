@@ -20,8 +20,8 @@ async def quest_button():
     # qb15 = InlineKeyboardButton('Elementary level(English)',callback_data='ele')
     # qb16 = InlineKeyboardButton('Beginners level(English)',callback_data='begin')
     # qb17 = InlineKeyboardButton('Show saved material🌱', callback_data='show')
-    qb18 = InlineKeyboardButton('AI🤖', callback_data='ai')
-    markup.add(qb, qb1, qb3, qb4, qb5, qb6, qb7, qb8, qb9, qb10, qb11, qb18)
+    # qb18 = InlineKeyboardButton('AI🤖', callback_data='ai')
+    markup.add(qb, qb1, qb3, qb4, qb5, qb6, qb7, qb8, qb9, qb10, qb11)
     return markup
 
 
