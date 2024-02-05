@@ -1,10 +1,8 @@
 from aiogram import types, Dispatcher
-from aiogram.types import Update
 from config import bot,chat1_id,admin1,admin2
 from keyboardbuttons import buttons
 from database import ddbb
 from profanity_check import predict_prob
-from time import sleep
 
 async def group_filter_message(m: types.Message):
         print(m.text)
@@ -15,7 +13,6 @@ async def group_filter_message(m: types.Message):
             datab.update_count_bun_table(tg_id=m.from_user.id)
             countt=datab.select_count_bun_table(tg_id=m.from_user.id)
             count=countt[0]
-            sleep(0.5)
             await m.delete()
             if count<3:
                 await bot.send_message(

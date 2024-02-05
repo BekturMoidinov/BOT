@@ -1,4 +1,4 @@
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, Update, CallbackQuery
+from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 
 async def menu_buttons_for_admin(var1,var2):

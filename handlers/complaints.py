@@ -1,11 +1,8 @@
-from tkinter import Image
+
 import sqlite3
 from aiogram import types, Dispatcher
-from aiogram.types import Update
-from random import choice
 from database import ddbb
-from config import bot,mediaa
-from const import FirstCaption,Userinfo
+from config import bot
 from keyboardbuttons import buttons
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup

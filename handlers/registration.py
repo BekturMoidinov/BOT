@@ -1,12 +1,11 @@
-from tkinter import Image
-
 from aiogram import types, Dispatcher
-from database import ddbb
-from config import bot,mediaa
-from const import FirstCaption,Userinfo
-from keyboardbuttons import buttons
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
+
+from config import bot, mediaa
+from const import Userinfo
+from database import ddbb
+
 
 class Registration(StatesGroup):
     name=State()

@@ -1,9 +1,8 @@
 from aiogram import types, Dispatcher
-from aiogram.types import CallbackQuery
+
 
 from database import ddbb
-from config import bot,mediaa,admin1,admin2
-from const import FirstCaption,Userinfo
+from config import bot,admin1,admin2
 from keyboardbuttons import buttons,menu_buttons
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup

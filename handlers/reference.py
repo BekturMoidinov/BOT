@@ -1,12 +1,15 @@
-from aiogram import types, Dispatcher
-from config import bot,admin1,admin2
-from keyboardbuttons import buttons
-from database import ddbb
-from aiogram.utils.deep_linking import _create_link
-import os
 import binascii
+import os
+
+from aiogram import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters.state import State, StatesGroup
+from aiogram.utils.deep_linking import _create_link
+
+from config import bot
+from database import ddbb
+from keyboardbuttons import buttons
+
 
 async def reference_menu(call: types.CallbackQuery):
     datab=ddbb.Database()
